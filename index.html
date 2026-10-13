@@ -1,0 +1,303 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="Rohan Popenoe — product manager and MBA candidate at NYU Stern.">
+<link rel="icon" href="avatar.jpg">
+<title>Rohan Popenoe</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500&family=Geist+Mono:wght@400&display=swap">
+<style>
+/* Layout: a quiet header row (photo + name left, tabs right) whose tabs unfold panels beneath it; the rest of the screen is air with one low statement. */
+:root{
+  --bg:#fcfbf7; --fg:#14161a; --muted:#7d7f86; --line:#ebe9e2; --accent:#2c56f5; --soft:#f6f4ee;
+  --sans:"Geist",ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;
+  --mono:"Geist Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
+}
+*{box-sizing:border-box}
+body{margin:0}
+img{max-width:100%}
+[hidden]{display:none!important}
+html,body{min-height:100%}
+body{background:var(--bg);color:var(--fg);font-family:var(--sans);font-weight:300;font-size:15px;line-height:1.6;-webkit-font-smoothing:antialiased;padding-inline:clamp(16px,5vw,72px);padding-block:0}
+a{color:inherit;text-decoration:none}
+.wrap{max-width:1180px;margin:0 auto;min-height:100vh;display:flex;flex-direction:column}
+
+header{display:flex;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap;padding-block:36px 0}
+.id{display:flex;align-items:center;gap:14px}
+.id img{width:44px;height:44px;border-radius:50%;object-fit:cover;display:block}
+.id .n{font-weight:500;font-size:15px;letter-spacing:-.01em}
+.id .r{font-family:var(--mono);font-size:11px;color:var(--muted);letter-spacing:.02em}
+nav{display:flex;gap:clamp(14px,2.6vw,34px);flex-wrap:wrap}
+nav button{all:unset;cursor:pointer;font-size:14px;font-weight:400;color:var(--muted);position:relative;padding-block:6px;transition:color .25s}
+nav button::after{content:"";position:absolute;left:0;right:0;bottom:0;height:1px;background:var(--accent);transform:scaleX(0);transform-origin:left;transition:transform .35s cubic-bezier(.2,.7,.2,1)}
+nav button:hover,nav button[aria-expanded="true"]{color:var(--fg)}
+nav button[aria-expanded="true"]::after{transform:scaleX(1)}
+nav button:focus-visible{outline:1px solid var(--accent);outline-offset:4px}
+
+.drawer{display:grid;grid-template-rows:0fr;transition:grid-template-rows .55s cubic-bezier(.2,.7,.2,1)}
+.drawer.open{grid-template-rows:1fr}
+.drawer>div{overflow:hidden;min-height:0}
+.panel{padding-block:56px 64px;border-bottom:1px solid var(--line);opacity:0;transform:translateY(-6px);transition:opacity .35s,transform .45s}
+.drawer.open .panel{opacity:1;transform:none;transition-delay:.12s}
+.panel[hidden]{display:none!important}
+.eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin:0 0 28px}
+.panel h2{font-weight:400;font-size:clamp(22px,2.6vw,30px);letter-spacing:-.02em;line-height:1.25;margin:0 0 24px;max-width:28ch;text-wrap:balance}
+.panel p{max-width:62ch;margin:0 0 14px;color:var(--fg)}
+.rows{display:grid;gap:0;max-width:880px}
+.row{display:grid;grid-template-columns:150px minmax(0,1fr);gap:28px;padding-block:22px;border-top:1px solid var(--line)}
+.row:first-child{border-top:0;padding-top:0}
+.row .when{font-family:var(--mono);font-size:12px;color:var(--muted);padding-top:3px;font-variant-numeric:tabular-nums}
+.row h3{font-size:15px;font-weight:500;margin:0;letter-spacing:-.01em}
+.row .sub{color:var(--muted);font-size:14px;margin:2px 0 10px}
+.row ul{margin:0;padding:0;list-style:none;display:grid;gap:8px}
+.row li{max-width:68ch;padding-left:16px;position:relative}
+.row li::before{content:"";position:absolute;left:0;top:.75em;width:6px;height:1px;background:var(--muted)}
+#experience .row li::before,#education .row li::before{top:calc(.8em - 2px);width:4px;height:4px;border-radius:50%}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,250px),1fr));gap:40px 48px;max-width:960px}
+.proj h3{font-size:15px;font-weight:500;margin:0 0 6px}
+.proj .tag{font-family:var(--mono);font-size:11px;color:var(--accent);letter-spacing:.04em;margin-bottom:10px}
+.ext{border-bottom:1px solid var(--line);transition:border-color .3s,color .3s}
+.ext span{color:var(--accent);font-size:12px}
+.ext:hover{border-color:var(--accent)}
+.proj p{font-size:14px;color:var(--muted);margin:0}
+.contact{display:grid;gap:14px;font-size:clamp(18px,2vw,22px);font-weight:400;letter-spacing:-.01em}
+.contact a{width:fit-content;border-bottom:1px solid var(--line);transition:border-color .3s}
+.contact a:hover{border-color:var(--accent)}
+.contact .k{font-family:var(--mono);font-size:11px;color:var(--muted);letter-spacing:.1em;text-transform:uppercase;display:block;margin-bottom:2px}
+
+main{flex:1;display:flex;align-items:flex-end;padding-block:clamp(120px,26vh,300px) 56px}
+.hero{max-width:780px}
+.hero h1{font-weight:300;font-size:clamp(28px,4.4vw,52px);line-height:1.12;letter-spacing:-.035em;margin:0;text-wrap:balance}
+.hero h1 em{font-style:normal;color:var(--muted)}
+footer{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;padding-block:22px 32px;font-family:var(--mono);font-size:11px;color:var(--muted);letter-spacing:.03em}
+
+.pic{all:unset;cursor:pointer;border-radius:50%;display:block;transition:transform .3s cubic-bezier(.2,.7,.2,1)}
+.pic:hover{transform:scale(1.06)}
+.pic:focus-visible{outline:1px solid var(--accent);outline-offset:3px}
+.lb{position:fixed;inset:0;z-index:50;background:transparent;cursor:pointer}
+.lb img{position:fixed;left:0;top:0;height:auto;max-width:none;border-radius:8px;transform-origin:0 0;box-shadow:0 24px 60px -24px rgba(20,22,26,.35);will-change:transform,clip-path}
+/* cursor */
+.c-dot,.c-ring{position:fixed;left:0;top:0;pointer-events:none;z-index:99;border-radius:50%;transform:translate(-50%,-50%)}
+.c-dot{width:6px;height:6px;background:var(--accent)}
+.c-ring{width:34px;height:34px;border:1px solid var(--accent);opacity:.55;transition:width .3s cubic-bezier(.2,.7,.2,1),height .3s cubic-bezier(.2,.7,.2,1),opacity .3s,background-color .3s}
+.c-ring::before,.c-ring::after{content:"";position:absolute;background:var(--accent);opacity:0;transition:opacity .3s}
+.c-ring::before{left:50%;top:-7px;bottom:-7px;width:1px;transform:translateX(-50%)}
+.c-ring::after{top:50%;left:-7px;right:-7px;height:1px;transform:translateY(-50%)}
+body.hov .c-ring{width:56px;height:56px;opacity:.9;background:color-mix(in srgb,var(--accent) 8%,transparent)}
+body.hov .c-ring::before,body.hov .c-ring::after{opacity:.5}
+body.down .c-ring{width:22px;height:22px}
+@media (hover:hover) and (pointer:fine){body.cur,body.cur *{cursor:none!important}}
+@media (hover:none),(pointer:coarse){.c-dot,.c-ring{display:none}}
+
+@media (max-width:640px){
+  header{padding-block:24px 0}
+  .row{grid-template-columns:1fr;gap:6px}
+  main{padding-block:140px 40px}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+
+<div class="c-ring" aria-hidden="true"></div><div class="c-dot" aria-hidden="true"></div>
+<div class="wrap">
+<header>
+  <div class="id">
+    <button class="pic" id="pic" aria-label="View full photo"><img src="avatar.jpg" alt="Rohan Popenoe"></button>
+    <a class="n" href="#" data-home>Rohan Popenoe</a>
+  </div>
+  <nav aria-label="Sections">
+    <button aria-expanded="false" data-t="about">About</button>
+    <button aria-expanded="false" data-t="experience">Experience</button>
+    <button aria-expanded="false" data-t="education">Education</button>
+    <button aria-expanded="false" data-t="projects">Projects</button>
+    <button aria-expanded="false" data-t="contact">Contact</button>
+  </nav>
+</header>
+
+<div class="drawer" id="drawer"><div>
+
+<section class="panel" id="about" hidden>
+  <p class="eyebrow">About</p>
+  <h2>I build technology that brings people closer together.</h2>
+  <p>I'm a product manager and first-year MBA candidate at NYU Stern, specializing in tech product management and AI. I spent four years at RiskSpan, a structured-finance analytics firm, growing from junior analyst to product manager of its agentic AI platform. I pushed for AI early, while its value was still debated inside the company,.</p>
+  <p>Human connection is what drives my work. I believe technology, used with intention, can help people find each other again. Music does that better than almost anything, so in my free time I'm building a live listening space where people anywhere can share music together in real time.</p>
+  <p>My grandfather was an inventor who took his idea from prototype all the way to market. I carry his example with me, and I came to Stern to maximize my impact.</p>
+  <p>Outside work I'm training for my private pilot license. I also ride motorcycles, play guitar, ukulele and violin, cook, backpack, and look for live music anywhere I can find it in New York City.</p>
+</section>
+
+<section class="panel" id="experience" hidden>
+  <p class="eyebrow">Experience</p>
+  <div class="rows">
+    <div class="row"><div class="when">2025 – 2026</div><div>
+      <h3>Product Manager, RiskSpan</h3><p class="sub">Arlington, VA</p>
+      <ul><li>Owned strategy and roadmap for an agentic AI platform serving 12 enterprise clients and $6M in engagements.</li>
+      <li>Led a six-person international UI/UX team through a full platform overhaul; adoption supported 50% YoY growth in recurring revenue.</li>
+      <li>Trained up to 50 colleagues across product, sales and analytics as the firm's AI Champion.</li></ul></div></div>
+    <div class="row"><div class="when">2022 – 2025</div><div>
+      <h3>Junior → Senior Business Analyst, RiskSpan</h3><p class="sub">Promoted early to Product Manager</p>
+      <ul><li>Built the live demo approach for agentic AI features with sales engineering, supporting 30% YoY ARR growth.</li>
+      <li>Led migration of 50 client-facing reports to a cloud BI platform across four direct reports in India and the US, with no service disruption.</li>
+      <li>Built MCP servers and RAG chatbots that reached company-wide adoption.</li></ul></div></div>
+    <div class="row"><div class="when">2019 – 2024</div><div>
+      <h3>Founder, Altitude Media Productions</h3><p class="sub">Syracuse, NY</p>
+      <ul><li>Ran a real estate marketing studio selling drone and cinematic video packages; owned positioning, pricing and client relationships.</li></ul></div></div>
+    <div class="row"><div class="when">2021 – 2022</div><div>
+      <h3>Research Intern to the CEO, Dynex Capital</h3><p class="sub">Glen Allen, VA</p>
+      <ul><li>Wrote a weekly macroeconomic briefing for leadership and built recurring R visualizations for strategy discussions.</li></ul></div></div>
+  </div>
+</section>
+
+<section class="panel" id="education" hidden>
+  <p class="eyebrow">Education</p>
+  <div class="rows">
+    <div class="row"><div class="when">2026 – 2028</div><div>
+      <h3>NYU Stern School of Business</h3><p class="sub">MBA, Tech Product Management and Artificial Intelligence</p>
+      <ul><li>AVP of Mentorship, Stern Tech Association</li><li>AVP of Community, Stern Entrepreneurship and Startup Association</li><li>AVP of Adventure Planning, Stern Adventures</li></ul></div></div>
+    <div class="row"><div class="when">2018 – 2022</div><div>
+      <h3>Syracuse University, Maxwell School</h3><p class="sub">BA, Economics and International Relations · Minor in Spanish</p>
+      <ul><li>Renée Crown Honors Scholar. Thesis on Chilean constitutional exceptionalism, with field interviews of President Gabriel Boric and six members of Congress in Santiago.</li></ul></div></div>
+  </div>
+</section>
+
+<section class="panel" id="projects" hidden>
+  <p class="eyebrow">Projects</p>
+  <div class="grid">
+    <div class="proj"><div class="tag">Agentic AI · Product</div><h3><a class="ext" href="https://riskspan.com/" target="_blank" rel="noopener">Agentic AI platform <span aria-hidden="true">↗</span></a></h3><p>Roadmap and discovery for RiskSpan's AI platform, built with 12 enterprise clients.</p></div>
+    <div class="proj"><div class="tag">Python · MCP</div><h3>MCP servers</h3><p>Connected Jira, Snowflake and internal APIs to AI tools; adopted across the company.</p></div>
+    <div class="proj"><div class="tag">OpenAI API · RAG</div><h3>Support and sales assistants</h3><p>Chatbots grounded in internal documentation, used by the full support and sales teams.</p></div>
+    <div class="proj"><div class="tag">Swift · AI</div><h3>Personal AI apps</h3><p>Small tools I build for myself to try new models and interaction patterns.</p></div>
+    <div class="proj"><div class="tag">Startup</div><h3><a class="ext" href="https://www.altitudemedia.productions/" target="_blank" rel="noopener">Altitude Media <span aria-hidden="true">↗</span></a></h3><p>A real estate video studio I started in college and ran for five years.</p></div>
+    <div class="proj"><div class="tag">Research</div><h3><a class="ext" href="https://www.maxwell.syr.edu/news/article/chilean-president-travels-coach-right-next-to-a-maxwell-student" target="_blank" rel="noopener">Chilean constitutionalism <span aria-hidden="true">↗</span></a></h3><p>Honors thesis based on fieldwork and interviews with national leaders in Santiago.</p></div>
+  </div>
+</section>
+
+<section class="panel" id="contact" hidden>
+  <p class="eyebrow">Contact</p>
+  <div class="contact">
+    <div><span class="k">Email</span><span>rohan.popenoe@stern.nyu.edu</span></div>
+    <a href="https://www.linkedin.com/in/rpopenoe" target="_blank" rel="noopener"><span class="k">LinkedIn</span>linkedin.com/in/rpopenoe</a>
+  </div>
+</section>
+
+</div></div>
+
+<main></main>
+
+<div class="lb" id="lb" hidden><img src="photo.jpg" alt="Rohan Popenoe on a Manhattan rooftop"></div>
+
+<footer><span>New York City · 40.76° N, 73.99° W</span><span>© 2026 Rohan Popenoe</span></footer>
+</div>
+
+<script>
+(function(){
+  const drawer=document.getElementById('drawer');
+  const btns=[...document.querySelectorAll('nav button')];
+  const panels=[...document.querySelectorAll('.panel')];
+  let cur=null;
+  function show(id){
+    if(id===cur||!id){drawer.classList.remove('open');btns.forEach(b=>b.setAttribute('aria-expanded','false'));cur=null;return;}
+    const swap=()=>{panels.forEach(p=>p.hidden=p.id!==id);requestAnimationFrame(()=>drawer.classList.add('open'));};
+    if(cur){drawer.classList.remove('open');setTimeout(swap,280);}else swap();
+    btns.forEach(b=>b.setAttribute('aria-expanded',String(b.dataset.t===id)));
+    cur=id;
+  }
+  btns.forEach(b=>b.addEventListener('click',()=>show(b.dataset.t)));
+  document.querySelector('[data-home]').addEventListener('click',e=>{e.preventDefault();if(cur!=='about')show('about');});
+  const lb=document.getElementById('lb'),pic=document.getElementById('pic');
+  const big=lb.querySelector('img');
+  // face centre and face diameter in the full photo (1084 x 724), matching the circle crop
+  const FX=715/1084, FY=255/724, FD=340/1084;
+  let anim=null;
+  function frames(){
+    const r=pic.querySelector('img').getBoundingClientRect();
+    const w=Math.min(360,innerWidth-r.left-16), h=w*724/1084;
+    const fx=FX*w, fy=FY*h, fd=FD*w, s0=r.width/fd;
+    const cx=r.left+r.width/2, cy=r.top+r.height/2;
+    const R=Math.hypot(Math.max(fx,w-fx),Math.max(fy,h-fy))+2;
+    big.style.width=w+'px'; big.style.left=r.left+'px'; big.style.top=r.top+'px';
+    const tx=cx-fx*s0-r.left, ty=cy-fy*s0-r.top;
+    return [
+      {transform:`translate(${tx}px,${ty}px) scale(${s0})`,clipPath:`circle(${fd/2}px at ${fx}px ${fy}px)`,borderRadius:'0px',boxShadow:'0 0 0 0 rgba(20,22,26,0)'},
+      {transform:'translate(0px,0px) scale(1)',clipPath:`circle(${R}px at ${fx}px ${fy}px)`,borderRadius:'8px',boxShadow:'0 24px 60px -24px rgba(20,22,26,.35)'}
+    ];
+  }
+  const still2=matchMedia('(prefers-reduced-motion:reduce)').matches;
+  function openLb(){
+    lb.hidden=false;
+    const f=frames();
+    if(anim)anim.cancel();
+    anim=big.animate(f,{duration:still2?0:520,easing:'cubic-bezier(.2,.7,.2,1)',fill:'forwards'});
+    anim.onfinish=()=>{big.style.clipPath='none';};
+  }
+  function closeLb(){
+    const f=frames();
+    big.style.clipPath='';
+    if(anim)anim.cancel();
+    anim=big.animate(f.reverse(),{duration:still2?0:380,easing:'cubic-bezier(.4,0,.2,1)',fill:'forwards'});
+    anim.onfinish=()=>{lb.hidden=true;anim.cancel();pic.focus();};
+  }
+  pic.addEventListener('click',openLb);
+  lb.addEventListener('click',closeLb);
+  document.addEventListener('keydown',e=>{if(e.key!=='Escape')return;if(!lb.hidden)closeLb();else show(null);});
+  const h=(location.hash||'').slice(1);
+  show(h&&btns.some(b=>b.dataset.t===h)?h:'about');
+
+  // cursor
+  const fine=matchMedia('(hover:hover) and (pointer:fine)').matches;
+  if(!fine)return;
+  document.body.classList.add('cur');
+  const dot=document.querySelector('.c-dot'),ring=document.querySelector('.c-ring');
+  const still=matchMedia('(prefers-reduced-motion:reduce)').matches;
+  let mx=innerWidth/2,my=innerHeight/2,rx=mx,ry=my;
+  addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;dot.style.transform=`translate(${mx}px,${my}px) translate(-50%,-50%)`;});
+  addEventListener('mousedown',()=>document.body.classList.add('down'));
+  addEventListener('mouseup',()=>document.body.classList.remove('down'));
+  document.addEventListener('mouseover',e=>{document.body.classList.toggle('hov',!!e.target.closest('a,button'));});
+  document.addEventListener('mouseleave',()=>{dot.style.opacity=ring.style.opacity=0});
+  document.addEventListener('mouseenter',()=>{dot.style.opacity='';ring.style.opacity=''});
+  // pixel trail: grid-snapped squares that fade out behind the cursor
+  if(!still){
+    const cv=document.createElement('canvas');
+    cv.setAttribute('aria-hidden','true');
+    cv.style.cssText='position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:98';
+    document.body.appendChild(cv);
+    const ctx=cv.getContext('2d'),G=3,cells=new Map();
+    let dpr=1,lx=null,ly=null;
+    function size(){dpr=devicePixelRatio||1;cv.width=innerWidth*dpr;cv.height=innerHeight*dpr;ctx.setTransform(dpr,0,0,dpr,0,0);}
+    size();addEventListener('resize',size);
+    const accent=getComputedStyle(document.documentElement).getPropertyValue('--accent').trim()||'#2c56f5';
+    addEventListener('mousemove',e=>{
+      const x=e.clientX,y=e.clientY;
+      if(lx===null){lx=x;ly=y;}
+      const d=Math.hypot(x-lx,y-ly),n=Math.max(1,Math.ceil(d/G));
+      // only fill from the last position up to (not including) the current one, so nothing lands ahead
+      for(let i=0;i<n;i++){
+        const px=lx+(x-lx)*i/n,py=ly+(y-ly)*i/n;
+        if(Math.hypot(px-x,py-y)<5)continue;
+        const gx=Math.round(px/G)*G,gy=Math.round(py/G)*G;
+        cells.set(gx+','+gy,{x:gx-G/2,y:gy-G/2,a:.6});
+      }
+      lx=x;ly=y;
+    });
+    (function tick(){
+      ctx.clearRect(0,0,innerWidth,innerHeight);
+      ctx.fillStyle=accent;
+      for(const [k,c] of cells){
+        c.a-=.01;
+        if(c.a<=0){cells.delete(k);continue;}
+        ctx.globalAlpha=c.a;ctx.fillRect(c.x,c.y,G,G);
+      }
+      ctx.globalAlpha=1;
+      requestAnimationFrame(tick);
+    })();
+  }
+  (function loop(){const k=still?1:.16;rx+=(mx-rx)*k;ry+=(my-ry)*k;ring.style.transform=`translate(${rx}px,${ry}px) translate(-50%,-50%)`;requestAnimationFrame(loop);})();
+})();
+</script>
+
+</body>
+</html>
